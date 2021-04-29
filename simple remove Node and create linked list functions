@@ -1,0 +1,106 @@
+Node *takeinput(){ // (Linked List creator) and assign the member data to the given input and return the start of the linked list.
+	int inp;
+
+	Node *head = NULL, *tail = NULL;
+
+	while (inp != -1){
+
+	    cout << "Please enter an integer: (-1 to end): ";
+		cin >> inp;
+
+		if(inp == -1)
+		    break;
+
+		Node *newNode = new Node; // new node is allocated on the heap.
+		newNode->data = inp;  // member data of the previous allocated node is assigned.
+
+		if (head == NULL){ // if head is not pointing to anything
+			head = newNode; // point head to the pervious allocated node.
+			tail = newNode; // point tail to the pervious allocated node. tail will all ways point to the last node in the linked list.
+		}
+		else { //if head is pointing to a Node.
+			tail->next = newNode; // assign member next to the previous allocated node
+			tail = newNode; // set the previous allocated node as the new tail
+		}
+
+	}
+	return head;
+}
+
+Node* removeNode(Node* head)
+{
+    Node* lsearch{NULL}; // lead search Node pointer.
+
+    //Error Checking
+
+    if(!head) // if head is null
+    {
+        std::cout<< "Empty linked List\n";
+         return head;
+    }
+
+    if(head->next) // Assigns the lsearch pointer to the second Node in the linked list only if there are at least two Nodes in the linked list
+    {
+        lsearch = head->next;
+    }else // if there is only one element in the linked list then assign the lsearch to the head aswell.
+        {
+            lsearch = head;
+        }
+    //Error Checking
+
+    Node* fsearch{head}; //following search pointer
+    
+    /* If there are at least two Nodes in the linked list pointers 
+    
+    fsearch and lsearch are always pointing to two adjacent Nodes
+    
+    fsearch   lsearch
+      |          |
+    Node1 ---> Node2 ---> Node3 ---> Node4
+    
+    */
+    
+    //lsearch = head;
+
+    int searchSSN{0};
+
+    std::cout<< "Enter SSN of the person that is being removed: ";
+    std::cin>> searchSSN;
+
+    while(lsearch->next) //if search points to another Node.
+    {
+        if(lsearch->data == searchSSN) // Once lsearch->data matches the searchSSN  lsearch moves over one Node and creates a gap between the two nodes.
+                                       // then assigns that Node to fsearch cutting of in the gap from the linked list.
+        
+        /* fsearch             lsearch
+            |                     |
+         Node1 ---> Node2 ---> Node3 ---> Node4
+    
+    */
+        
+            {
+                fsearch->next = lsearch->next;
+
+                std::cout<< lsearch->data << " Removed\n"; // should be pName.
+                delete lsearch;
+
+                return head;
+            }
+
+        else if(fsearch->data == searchSSN)
+        {
+            delete head;
+            head = lsearch;
+            return head;
+        }
+        lsearch = lsearch->next;
+
+
+        fsearch = fsearch->next;
+
+    }
+
+    std::cout<< searchSSN << " not found\n";
+
+   return head;
+}
